@@ -1,0 +1,49 @@
+    <nav class="navbar bg-dark px-0 py-0">
+        <div class="container-fluid px-0">
+            <ul class="nav navbar d-flex justify-content-start px-0 py-0">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="">
+                        <i class="fa fa-phone"></i> +63 918 459 2272
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="">
+                        <i class="fa fa-envelope-o"></i> someone@example.com
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">
+                        <i class="fa fa-map-marker"></i> P. Santos St. Bagumbayan, Naga City
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="nav navbar d-flex justify-content-start justify-content-center justify-content-end px-0 py-0 py-md-auto">
+                {% if user.is_authenticated %}
+                <li>
+                    <a href="" class="text-white nav-link">
+                        <span class="">&#8369;</span> PHP
+                    </a>
+                </li>
+                <li>
+                    <a href="" class="text-white nav-link">
+                        <i class="fa fa-user-o"></i> My Account
+                    </a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{% url 'account:login' %}" class="text-white nav-link">
+                        Log In
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'account:signup' %}" class="text-white nav-link">
+                        Sign Up
+                    </a>
+                </li>
+
+                {% endif %}
+            </ul>
+
+        </div>
+    </nav>

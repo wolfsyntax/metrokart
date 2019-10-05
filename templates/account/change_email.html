@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}
+    Change Email
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row h-100">
+            <div class="col offset-md-3 col-md-6 offset-lg-4 col-lg-4 my-auto">
+
+                <form method="post" class="my-5">
+                    {% csrf_token %}
+                    <div class="form-row my-0 my-md-2">
+                        <div class="col-form-label-sm col-12 col-md-4">
+                            Current Email Address
+                        </div>
+                        <div class="col">
+                            <p class="form-text text-muted">
+                                {% if user.is_authenticated %}
+                                {{ user.email }}
+                                {% else %}
+                                    someone@example.com
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-row my-0 my-md-2">
+                        <div class="col-form-label-sm col-12 col-md-4">
+                            New Email Address
+                        </div>
+                        <div class="col">
+                            <input type="text" value="" placeholder="New Email Address" value="" id="" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-row my-0 my-md-2">
+                        <div class="col-form-label-sm col-12 col-md-4">
+                            Password
+                        </div>
+                        <div class="col">
+                            <input type="password" value="" placeholder="Password" value="" id="" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-row px-1 my-3">
+                        <button type="submit" class="btn btn-primary col font-weight-bold">
+                            Confirm
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

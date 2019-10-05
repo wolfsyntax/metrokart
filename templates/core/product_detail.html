@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+{{ product_data.product_name | title }}
+{% endblock %}
+{% block content %}
+    {% include 'includes/header.html' %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                A
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 px-1 px-md-3">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col">
+                            PRODUCT IMAGE
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

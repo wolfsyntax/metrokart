@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+
+{% endblock %}
+
+{% block metadescription %}
+
+{% endblock %}
+
+{% block metakeywords %}
+
+{% endblock %}
+{% block content %}
+    <form>
+        {% csrf_token %}
+        {{ form }}
+    </form>
+
+{% endblock %}

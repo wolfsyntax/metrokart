@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row h-100">
+            <div class="col offset-md-3 col-md-6 offset-lg-4 col-lg-4 my-auto">
+                
+                <form class="my-5" method="post">
+                    <div class="form-row my-3 py-2">
+                        <div class="col text-center">
+                            <a href="{% url 'sitemap:home' %}" title="Metrokart">
+                                <img src="{% static 'media/metrokart_logo.png'%}" height="100px" class="d-flex justify-content-center mx-auto" alt="company logo">
+                            </a>
+                        </div>
+                    </div>
+                    {% csrf_token %}
+                    <div class="form-row my-0 my-md-2">
+                        <div class="col-12 col-md-6 my-1 my-md-0">
+                            <input type="text" class="form-control" placeholder="First name" name="first_name" value="">
+                            <span class="help-tooltip sr-only sr-only-focusable">First name</span>
+                        </div>
+                        <div class="col-12 col-md-6 my-1 my-md-0">
+                            <input type="text" class="form-control" placeholder="Last name" name="last_name" value="">
+                            <span class="help-tooltip sr-only sr-only-focusable">Last name</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row my-0 my-md-2">
+                        <div class="col my-1 my-md-0">
+                            <input type="text" class="form-control" placeholder="Username" name="username" value="">
+                            <span class="help-tooltip sr-only sr-only-focusable">First name</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row my-0 my-md-2">
+                        <div class="col my-1 my-md-0">
+                            <input type="email" class="form-control" placeholder="Email address" name="email" value="">
+                            <span class="help-tooltip sr-only sr-only-focusable">First name</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row my-0 my-md-2">
+                        <div class="col-12 col-md-6 my-1 my-md-0">
+                            <input type="password" class="form-control" placeholder="New password" name="password" value="">
+                            <span class="help-tooltip sr-only sr-only-focusable">First name</span>
+                        </div>
+                        <div class="col-12 col-md-6 my-1 my-md-0">
+                            <input type="password" class="form-control" placeholder="Confirm password" name="conf_pass" value="">
+                            <span class="help-tooltip sr-only sr-only-focusable">Last name</span>
+                        </div>
+                    </div>
+
+                    <div class="form-row my-3">
+                        <div class="col help-tooltip form-text">
+                            By creating an account, you agree to our <a href="">Terms</a>, <a href="">Data Policy</a> and <a href="">Cookies Policy</a>.
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <button type="submit" class="btn btn-primary col">
+                            Sign Up
+                        </button>
+                    </div>
+
+                    <div class="form-row my-3">
+                        <div class="col help-tooltip form-text text-center">
+                            Already member? <a href="{% url 'account:login' %}" class="font-weight-bold">Login</a>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
