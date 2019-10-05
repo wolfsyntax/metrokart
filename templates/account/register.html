@@ -5,8 +5,7 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row h-100">
-            <div class="col offset-md-3 col-md-6 offset-lg-4 col-lg-4 my-auto">
-                
+            <div class="col offset-md-3 col-md-6 offset-lg-4 col-lg-4 my-auto" style="position: relative;">
                 <form class="my-5" method="post">
                     <div class="form-row my-3 py-2">
                         <div class="col text-center">
@@ -18,38 +17,47 @@
                     {% csrf_token %}
                     <div class="form-row my-0 my-md-2">
                         <div class="col-12 col-md-6 my-1 my-md-0">
-                            <input type="text" class="form-control" placeholder="First name" name="first_name" value="">
+                            <input type="text" class="form-control" placeholder="First name" name="first_name" value="" required>
+                            {% if form.first_name.errors %}
+                                <small>
+                                    {% for error in form.first_name.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </small>
+                            {% endif %}
                             <span class="help-tooltip sr-only sr-only-focusable">First name</span>
                         </div>
                         <div class="col-12 col-md-6 my-1 my-md-0">
-                            <input type="text" class="form-control" placeholder="Last name" name="last_name" value="">
+                            <input type="text" class="form-control" placeholder="Last name" name="last_name" value="" required>
                             <span class="help-tooltip sr-only sr-only-focusable">Last name</span>
                         </div>
                     </div>
 
                     <div class="form-row my-0 my-md-2">
                         <div class="col my-1 my-md-0">
-                            <input type="text" class="form-control" placeholder="Username" name="username" value="">
+                            <input type="text" class="form-control" placeholder="Username" name="username" value="" required>
                             <span class="help-tooltip sr-only sr-only-focusable">First name</span>
                         </div>
                     </div>
 
                     <div class="form-row my-0 my-md-2">
                         <div class="col my-1 my-md-0">
-                            <input type="email" class="form-control" placeholder="Email address" name="email" value="">
+                            <input type="email" class="form-control" placeholder="Email address" name="email" value="" required>
                             <span class="help-tooltip sr-only sr-only-focusable">First name</span>
                         </div>
                     </div>
 
                     <div class="form-row my-0 my-md-2">
                         <div class="col-12 col-md-6 my-1 my-md-0">
-                            <input type="password" class="form-control" placeholder="New password" name="password" value="">
+                            <input type="password" class="form-control" placeholder="New password" name="password" value="" required>
                             <span class="help-tooltip sr-only sr-only-focusable">First name</span>
+
                         </div>
                         <div class="col-12 col-md-6 my-1 my-md-0">
-                            <input type="password" class="form-control" placeholder="Confirm password" name="conf_pass" value="">
+                            <input type="password" class="form-control" placeholder="Confirm password" name="conf_password" value="" required>
                             <span class="help-tooltip sr-only sr-only-focusable">Last name</span>
                         </div>
+
                     </div>
 
                     <div class="form-row my-3">
@@ -71,6 +79,116 @@
                     </div>
 
                 </form>
+            </div>
+
+            <div class="col">
+            {% if form.errors %}
+                {% if form.first_name.errors %}
+                    {% for error in form.first_name.errors %}
+                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="position: absolute; top: 10px; right: 10px; float: right">
+                        <div class="toast-header">
+                            <img src="..." class="rounded mr-2" alt="...">
+                            <strong class="mr-auto">Bootstrap</strong>
+                            <small class="text-muted">2 seconds ago</small>
+
+                            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="toast-body">
+                            {{ error }}
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                {% endif %}
+
+                {% if form.last_name.errors %}
+                    {% for error in form.last_name.errors %}
+                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="position: absolute; top: 10px; right: 10px; float: right">
+                        <div class="toast-header">
+                            <img src="..." class="rounded mr-2" alt="...">
+                            <strong class="mr-auto">Bootstrap</strong>
+                            <small class="text-muted">2 seconds ago</small>
+
+                            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="toast-body">
+                            {{ error }}
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                {% endif %}
+
+                {% if form.username.errors %}
+                    {% for error in form.username.errors %}
+                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="position: absolute; top: 10px; right: 10px; float: right">
+                        <div class="toast-header">
+                            <img src="..." class="rounded mr-2" alt="...">
+                            <strong class="mr-auto">Bootstrap</strong>
+                            <small class="text-muted">2 seconds ago</small>
+
+                            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="toast-body">
+                            {{ error }}
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                {% endif %}
+
+                {% if form.email.errors %}
+                    {% for error in form.email.errors %}
+                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="position: absolute; top: 10px; right: 10px; float: right">
+                        <div class="toast-header">
+                            <img src="..." class="rounded mr-2" alt="...">
+                            <strong class="mr-auto">Bootstrap</strong>
+                            <small class="text-muted">2 seconds ago</small>
+
+                            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="toast-body">
+                            {{ error }}
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                {% endif %}
+
+                {% if form.password.errors %}
+                    {% for error in form.password.errors %}
+                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="position: absolute; top: 10px; right: 10px; float: right">
+                        <div class="toast-header">
+                            <img src="..." class="rounded mr-2" alt="...">
+                            <strong class="mr-auto">Bootstrap</strong>
+                            <small class="text-muted">2 seconds ago</small>
+
+                            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="toast-body">
+                            {{ error }}
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                {% endif %}
+            {%  endif %}
+
             </div>
         </div>
     </div>

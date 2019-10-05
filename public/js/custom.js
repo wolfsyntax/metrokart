@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+    $('.toast').toast('show');
     $('.owl-carousel').owlCarousel({
         loop:true,
         margin:3,

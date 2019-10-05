@@ -4,17 +4,7 @@
 
     {%  include 'includes/header.html' %}
     <div class="container-fluid">
-        <div class="row py-3 bg-darken">
-            <div class="col-md-3 text-center">
-                LOGO
-            </div>
-            <div class="col-md-6 text-center">
-                SEARCH
-            </div>
-            <div class="col-md-3 clearfix text-center">
-                WISHLIST/CART
-            </div>
-        </div>
+
         <div class="row">
             <div class="col-12 py-2 px-4">
                 <div class="container-fluid">
@@ -98,7 +88,7 @@
                         </div>
                     </div>
 
-                    <div class="row border mt-2 mb-0">
+                    <div class="row mt-2 mb-0">
                         {% for category in records.0 %}
                             <div class="col-12 col-md-3 col-lg-1 p-1 text-center" title="{{ category.description }}">
                                 <a href="{{ category.get_absolute_url }}">

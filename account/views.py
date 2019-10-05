@@ -15,6 +15,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.contrib import  messages
 
+from .forms import UserRegistrationForm
+
 class LoginView(TemplateView):
 
     template_name = "account/login.html"
@@ -25,6 +27,7 @@ class LoginView(TemplateView):
     @method_decorator(sensitive_post_parameters('password'))
     @method_decorator(csrf_protect)
     @method_decorator(never_cache)
+
     def dispatch(self, request, *args, **kwargs):
        # Sets a test cookie to make sure the user has cookies enabled
         request.session.set_test_cookie()
@@ -62,9 +65,9 @@ class LoginView(TemplateView):
 
         else:
            # print("\n\n\nuser doesn't exist")
-            messages.add_message(request,messages.ERROR, "Account doesn't exist or Inactive")
+            messages.add_message(request,messages.ERROR, "Invalid Username or Password")
 
-        return render(request, "authentication/login.html")
+        return render(request, "account/login.html")
 
 class LogoutView(RedirectView):
 
@@ -81,6 +84,17 @@ class LogoutView(RedirectView):
 
 class SignupView(TemplateView):
     template_name = "account/register.html"
+    form_class = UserRegistrationForm
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        print("\n\n\n\nSignup View Submission\n\n\n\n")
+        if form.is_valid():
+            print("\n\n\n\nForm is valid\n\n\n\n")
+            form.save()
+
+            return HttpResponseRedirect('/auth/login/?next=/')
+        return render(request, self.template_name, {"form": form})
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = "account/profile.html"
@@ -94,6 +108,10 @@ class PaymentOptionView(LoginRequiredMixin, TemplateView):
 
 class UserAddressView(LoginRequiredMixin, TemplateView):
     template_name = "account/new_address.html"
+
+class UserNewAddressView(LoginRequiredMixin, TemplateView):
+    template_name = "account/new_address.html"
+
 
 class ChangePassView(LoginRequiredMixin, TemplateView):
     template_name = "account/change_password.html"

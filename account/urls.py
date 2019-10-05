@@ -4,6 +4,7 @@ from django.urls import path
 from django.conf.urls import url, handler500, handler404, handler403, handler400
 from .views import * #LoginView, SignupView, ProfileView, PaymentOptionView, ChangePassView
 
+
 urlpatterns = [
     url(r'^auth/join/$', SignupView.as_view(), name="signup"),
     url(r'^user/login$', LoginView.as_view(), name="login"),

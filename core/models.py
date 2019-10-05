@@ -358,8 +358,8 @@ class Refund(models.Model):
         verbose_name_plural="Refunds"
 
 
-def userprofile_receiver(sender, instance, created, *args, **kwargs):
-    if created :
-        userprofile = UserProfile.objects.create(user=instance)
+#def userprofile_receiver(sender, instance, created, *args, **kwargs):
+#    if created :
+#        userprofile = UserProfile.objects.create(user=instance)
 
-post_save.connect(userprofile_receiver,sender=User)
+#post_save.connect(userprofile_receiver,sender=User)
