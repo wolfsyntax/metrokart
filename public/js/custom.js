@@ -1,5 +1,7 @@
 $(document).ready(function(){
-    $('.toast').toast('show');
+
+
+
     $('.owl-carousel').owlCarousel({
         loop:true,
         margin:3,
@@ -37,6 +39,14 @@ $(document).ready(function(){
     $('.single-item').on('beforeChange', function(event, slick, currentSlide, nextSlide){
       alert("Next Slide: " + nextSlide);
     });
+
+    $('.toast').on('show.bs.toast', function () {
+      // do something…
+    });
+
+    $('.toast').toast('show');
+
+    startTime();
 });
 
     var pos = 0;
@@ -70,3 +80,35 @@ $(document).ready(function(){
         //alert(attrval);
         $(".single-item .slick-list .slick-track").attr('style',attrval);
     }
+
+
+    var sysdate = new Date();
+
+function startTime() {
+
+    var today = new Date();
+    //alert(today.toTimeString());
+    var h = today.getHours();// - (1*5);
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+
+    h = checkTime(h);
+
+    var a = h >= 12 ? ' p.m.' : ' a.m.';
+
+    h = h % 12;
+    h = h ? h : 12;
+
+    m = checkTime(m);
+
+    s = checkTime(s);
+
+    $("#server_time").html(h + ":" + m + a);
+    var t = setTimeout(startTime, 500);
+
+}
+
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+}

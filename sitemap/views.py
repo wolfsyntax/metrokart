@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, TemplateView
 from core.models import Category
+from datetime import datetime
 
 # Create your views here.
 class HomeView(ListView):
@@ -11,9 +12,10 @@ class HomeView(ListView):
     queryset = [Category.objects.filter(status=True), ]
     context_object_name = 'records'
 
-#    def get_context_data(self, *args, **kwargs):
+    def get_context_data(self, *args, **kwargs):
 
-#        context = super(HomeView, self).get_context_data(*args, **kwargs)
-#        context['category'] = Category.objects.filter(status=True)
+        context = super(HomeView, self).get_context_data(*args, **kwargs)
+        context['category'] = Category.objects.filter(status=True)
+        #context['now'] = datetime.now()
 
-#        return context
+        return context

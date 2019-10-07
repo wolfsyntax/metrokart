@@ -1,22 +1,24 @@
+
     <nav class="navbar bg-dark px-0 py-0">
         <div class="container-fluid px-0">
-            <ul class="nav navbar d-flex justify-content-start px-0 py-0">
-                <li class="nav-item">
+            <div class="row d-flex justify-content-start px-2 py-0 py-md-0">
+
                     <a class="nav-link text-white" href="">
                         <i class="fa fa-phone"></i> +63 918 459 2272
                     </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link text-white" href="mailto:someone@example.com">
                         <i class="fa fa-envelope-o"></i> someone@example.com
                     </a>
-                </li>
-                <li class="nav-item">
+
                     <a class="nav-link text-white" href="#">
                         <i class="fa fa-map-marker"></i> P. Santos St. Bagumbayan, Naga City
                     </a>
-                </li>
-            </ul>
+
+                    <a class="nav-link text-white d-none d-lg-inline-block" href="#" title="{% now "l, M d, Y"%}">
+                        <i class="fa fa-clock-o"></i>&nbsp;<span id="server_time">{% now "g:i a" %}</span>
+                    </a>
+
+            </div>
 
             <ul class="nav navbar d-flex justify-content-start justify-content-center justify-content-end px-0 py-0 py-md-auto">
                 {% if user.is_authenticated %}

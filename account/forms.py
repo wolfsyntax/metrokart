@@ -10,15 +10,23 @@ from django.contrib.auth import update_session_auth_hash
 
 
 import re   # Regular Expression
+GENDER = (
+    ('M', 'Male'),
+    ('F', 'Female'),
+    ('C', 'Custom'),
+)
 
 class UserRegistrationForm(forms.Form):
 
-    email = forms.CharField(max_length=254, error_messages={"required": "Email is required."})
+    email = forms.EmailField(max_length=254, error_messages={"required": "Email is required."})
     username = forms.CharField(max_length=64, error_messages={"required":"Username is required."})
-    first_name = forms.CharField(max_length=64, error_messages={"required": "First name is required."})
-    last_name = forms.CharField(max_length=64, error_messages={"required":"Last name is required"})
+    first_name = forms.RegexField(regex="^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$", max_length=64, error_messages={"required": "First name is required."})
+    last_name = forms.RegexField(regex="^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$", max_length=64, error_messages={"required":"Last name is required"})
     password = forms.CharField(max_length=30, error_messages={"required":"Password is required"}, help_text="Password must be a strong password")
     conf_password = forms.CharField(max_length=30, error_messages={"required":"Confirm Password is required."})
+    phone = forms.RegexField(regex=r"^(\+63|0)9[0-9]{9}$", max_length=13, error_messages={"invalid":"Phone number is invalid format","required": "Mobile Phone is required."})
+    gender = forms.MultipleChoiceField(choices=GENDER)
+    birthdate = forms.DateField()
 
     def clean(self):
         cd = super(UserRegistrationForm, self).clean()

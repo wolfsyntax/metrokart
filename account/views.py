@@ -17,6 +17,7 @@ from django.contrib import  messages
 
 from .forms import UserRegistrationForm
 
+
 class LoginView(TemplateView):
 
     template_name = "account/login.html"
@@ -60,7 +61,7 @@ class LoginView(TemplateView):
 
                 else:
 
-                    return HttpResponseRedirect("/dashboard")
+                    return HttpResponseRedirect("/")
 
 
         else:
@@ -83,6 +84,7 @@ class LogoutView(RedirectView):
 
 
 class SignupView(TemplateView):
+
     template_name = "account/register.html"
     form_class = UserRegistrationForm
 
@@ -93,7 +95,7 @@ class SignupView(TemplateView):
             print("\n\n\n\nForm is valid\n\n\n\n")
             form.save()
 
-            return HttpResponseRedirect('/auth/login/?next=/')
+            return HttpResponseRedirect('/user/login?next=/')
         return render(request, self.template_name, {"form": form})
 
 class ProfileView(LoginRequiredMixin, TemplateView):

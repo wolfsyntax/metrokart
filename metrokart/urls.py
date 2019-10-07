@@ -19,6 +19,7 @@ from django.conf.urls import url
 
 from sitemap.views import *
 from core.views import *
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,5 +27,6 @@ urlpatterns = [
     url(r'^', include(("sitemap.urls","sitemap")), name="sitemap"),
     url(r'^', include(("core.urls","core")), name="core"),
     url(r'^', include(("mall.urls","mall")), name="merchant"),
+    url(r'test', TemplateView.as_view(template_name="mall/index.html"), name="test"),
 
 ]

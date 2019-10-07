@@ -11,6 +11,7 @@ ADDRESS_CHOICES = (
 GENDER = (
     ('M', 'Male'),
     ('F', 'Female'),
+    ('C', 'Custom'),
 )
 
 class UserProfile(models.Model):
@@ -95,3 +96,9 @@ class UserVoucher(models.Model):
         verbose_name = "User Voucher"
         verbose_name_plural = "User Voucher"
 
+
+#def userprofile_receiver(sender, instance, created, *args, **kwargs):
+#    if created :
+#        userprofile = UserProfile.objects.create(user=instance)
+
+#post_save.connect(userprofile_receiver,sender=User)
