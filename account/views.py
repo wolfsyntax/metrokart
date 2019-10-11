@@ -131,7 +131,7 @@ class ChangePassView(LoginRequiredMixin, TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
 
-        if not request.user.is_staff:
+        if request.user.is_staff:
             raise PermissionDenied
 
         return super(ChangePassView, self).dispatch(request, *args, **kwargs)
