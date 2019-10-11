@@ -48,6 +48,11 @@ PACKAGE_HANDLING = (
     ('others', 'Batteries/Powerbanks, etc.'),
 )
 
+PAYMENT_OPTIONS = (
+    ('card','Debit/Credit Card'),
+    ('paypal','Paypal'),
+    ('dragon pay', 'Dragon Pay'),
+)
 
 class Category(models.Model):
 
@@ -182,7 +187,7 @@ class Voucher(models.Model):
 
     voucher_code = models.CharField(max_length=15)
     amount = models.FloatField()
-#    merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
+    merchant = models.ForeignKey(User, on_delete=models.CASCADE)
     valid_until = models.DateTimeField()
 
     def __str__(self):
@@ -250,12 +255,14 @@ class Order(models.Model):
     shipping_address = models.ForeignKey(Address, related_name='shipping_address', on_delete=models.SET_NULL, blank=True, null=True)
     billing_address = models.ForeignKey(Address, related_name='billing_address', on_delete=models.SET_NULL,
                                          blank=True, null=True)
-    payment = models.ForeignKey('Payment', on_delete=models.SET_NULL, blank=True, null=True)
+    payment_type = models.CharField(choices=PAYMENT_OPTIONS, max_length=32)
+
     voucher = models.ForeignKey(Voucher, on_delete=models.SET_NULL, blank=True, null=True)
     package_handling = models.CharField(choices=PACKAGE_HANDLING, max_length=100)
     earn_point = models.FloatField(default=0)
     redeem_point = models.FloatField(default=0)
 
+    canceled = models.BooleanField(default=False)
     shipped = models.BooleanField(default=False)
     received = models.BooleanField(default=False)
     refund_requested = models.BooleanField(default=False)

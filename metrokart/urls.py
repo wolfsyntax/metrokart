@@ -26,7 +26,15 @@ urlpatterns = [
     url(r'^', include(("account.urls","account")), name="account"),
     url(r'^', include(("sitemap.urls","sitemap")), name="sitemap"),
     url(r'^', include(("core.urls","core")), name="core"),
+    path('accounts/', include('django.contrib.auth.urls')),
     url(r'^', include(("mall.urls","mall")), name="merchant"),
     url(r'test', TemplateView.as_view(template_name="mall/index.html"), name="test"),
+    url(r'terms/merchant', TemplateView.as_view(template_name="sitemap/mall_terms.html"), name="terms-mall"),
+    url(r'terms/customer', TemplateView.as_view(template_name="sitemap/client_terms.html"), name="terms-client"),
+    url(r'docs/privacy', TemplateView.as_view(template_name="sitemap/privacy.html"), name="doc-privacy"),
+    url(r'docs/policy/data', TemplateView.as_view(template_name="sitemap/data_policy.html"), name="data-policy"),
+    url(r'docs/policy/cookies', TemplateView.as_view(template_name="sitemap/cookies_policy.html"), name="cookies-policy"),
 
 ]
+
+

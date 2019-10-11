@@ -17,7 +17,10 @@ class Merchant(models.Model):
     company_logo = models.CharField(max_length=100, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     payment_methods = models.ManyToManyField(PaymentMethod)
-    #can_shipped = models.BooleanField(default=False)
+    can_shipped = models.BooleanField(default=False)
+    company_address = models.CharField(max_length=255)
+    tin = models.CharField(max_length=15)
+    permit_no = models.CharField(max_length=100)
 
     class Meta:
         db_table = "merchant"
@@ -27,8 +30,8 @@ class Merchant(models.Model):
 
 
 
-def merchant_receiver(sender, instance, created, *args, **kwargs):
-    if created :
-        merchant_profile = Merchant.objects.create(user=instance)
+#def merchant_receiver(sender, instance, created, *args, **kwargs):
+#    if created :
+#        merchant_profile = Merchant.objects.create(user=instance)
 
-post_save.connect(merchant_receiver,sender=User)
+#post_save.connect(merchant_receiver,sender=User)

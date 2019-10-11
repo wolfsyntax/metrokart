@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect
+from django.core.exceptions import PermissionDenied
 
 # Create your views here.
 
@@ -15,7 +16,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.contrib import  messages
 
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, ChangeEmailForm, ChangePassForm
+
+from django.contrib.auth.hashers import make_password, check_password
 
 
 class LoginView(TemplateView):
@@ -55,12 +58,19 @@ class LoginView(TemplateView):
             if userdata.is_active :
                 login(request, userdata)
 
-                if userdata.is_superuser or userdata.is_staff:
-
+                if userdata.is_superuser:
+                    
+                    print("\n\n\n\n\Admin\n\n\n\n")
                     return HttpResponseRedirect("/admin/")
 
-                else:
+                elif userdata.is_staff:
+                    
+                    print("\n\n\n\n\Merchant\n\n\n\n")
+                    return HttpResponseRedirect("/dashboard")
 
+                else:
+                    
+                    print("\n\n\n\n\Customer\n\n\n\n")
                     return HttpResponseRedirect("/")
 
 
@@ -94,7 +104,7 @@ class SignupView(TemplateView):
         if form.is_valid():
             print("\n\n\n\nForm is valid\n\n\n\n")
             form.save()
-
+            messages.add_message(request, messages.SUCCESS, "Account has been created successfully!!!")
             return HttpResponseRedirect('/user/login?next=/')
         return render(request, self.template_name, {"form": form})
 
@@ -117,9 +127,60 @@ class UserNewAddressView(LoginRequiredMixin, TemplateView):
 
 class ChangePassView(LoginRequiredMixin, TemplateView):
     template_name = "account/change_password.html"
+    form_class = ChangePassForm
+
+    def dispatch(self, request, *args, **kwargs):
+
+        if not request.user.is_staff:
+            raise PermissionDenied
+
+        return super(ChangePassView, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+
+            if form.save(request.user.id):
+                return HttpResponseRedirect("/account/profile")
+            else:
+                messages.add_message(request, messages.WARNING, "Please enter the current password!"
+                                     )
+        return render(request, self.template_name, {"form": form})
+
+
 
 class ChangeEmailView(LoginRequiredMixin, TemplateView):
     template_name = "account/change_email.html"
+    form_class = ChangeEmailForm
+
+    def dispatch(self, request, *args, **kwargs):
+
+        if request.user.is_staff:
+            raise PermissionDenied
+
+        return super(ChangeEmailView, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+
+        form = self.form_class(request.POST)
+
+        #cd = form.clean()
+        #print("\n\n\n\nRequesting to change Email Address\n\n\n\n\nCurrent Email: {}\nNew Email: {}\n\n\n\n\n".format(request.user.email, cd['email']))
+        print("\n\n\n\nForm is valid: {}\n\n\n\n\n".format(form.is_valid()))
+
+
+        if form.is_valid():
+
+            if form.save(request.user.email):
+                return HttpResponseRedirect("/account/profile")
+            else:
+                messages.add_message(request, messages.WARNING, "Please enter the current password!"
+                                     )
+        return render(request, self.template_name, {"form": form})
+
+
 
 class ChangePhoneView(LoginRequiredMixin, TemplateView):
     template_name = "account/change_phone.html"

@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 from address.models import *
+from django.db.models.signals import post_save, post_delete
+
+from django.dispatch import  receiver
 
 ADDRESS_CHOICES = (
     ('B', 'Billing Address'),
@@ -19,7 +22,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=13)
     gender = models.CharField(choices=GENDER, max_length=1)
-    birthdate = models.DateField()
+    birthdate = models.DateField(blank=True)
     loyalty_point = models.FloatField(default=0)
 
     def __str__(self):
@@ -32,7 +35,7 @@ class UserProfile(models.Model):
         db_table = "auth_user_profile"
         verbose_name = "Customer Account"
         verbose_name_plural = "Customers Account"
-
+    
 class Address(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -97,8 +100,15 @@ class UserVoucher(models.Model):
         verbose_name_plural = "User Voucher"
 
 
-#def userprofile_receiver(sender, instance, created, *args, **kwargs):
-#    if created :
-#        userprofile = UserProfile.objects.create(user=instance)
+#def userprofile_receiver(sender, instance=None, created=False, **kwargs):
 
+#    if created :
+#        print("\n\n\n\n\n\n\n\n\nSender: {}\nInstance: {}\nCreated: {}\nkwargs: {}\n\n\n\n\n\n".format(sender, instance,created,kwargs['raw']))
+#        UserProfile.objects.create(user=instance, birthdate="1992-05-15")
+#    print("\n\n\n\n\nUser has been created\n\n\n\n")
+#    instance.userprofile.save()
 #post_save.connect(userprofile_receiver,sender=User)
+
+#@receiver(post_save, sender=User)
+#def save_user_profile(sender, instance, **kwargs):
+#    instance.userprofile.save()

@@ -4,10 +4,10 @@
 
 {% block content %}
     <div class="container-fluid">
-        <div class="row h-100">
+        <div class="row h-100 px-0">
 
-            <div class="col-12 col-sm-8 offset-sm-2 offset-lg-3 col-lg-6 offset-xl-4 col-xl-4 my-auto" style="position: relative;">
-                <form class="my-5" method="post">
+            <div class="col-12 col-sm-10 offset-sm-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3 my-auto" style="position: relative;">
+                <form class="my-5 p-0" method="post">
                     <div class="form-row my-3 py-2">
                         <div class="col text-center">
                             <a href="{% url 'sitemap:home' %}" title="Metrokart">
@@ -16,94 +16,103 @@
                         </div>
                     </div>
                     {% csrf_token %}
-                    <div class="form-row my-0 my-md-1">
-                        <div class="col-12 col-md-6 my-1 my-md-0">
-                            <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">First name</label>
-                            <input type="text" class="form-control" placeholder="First name" name="first_name" value="" required>
+                    <div class = "row">
+                        <div class="col-12 col-lg-6">
+
+                            <div class="form-row my-0 my-md-1">
+                                <div class="col-12 col-md-6 my-1 my-md-0">
+                                    <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">First name&nbsp;<strong class="text-danger">*</strong></label>
+                                    <input type="text" class="form-control" placeholder="First name" name="first_name" value="{% if form.first_name.value %}{{form.first_name.value}}{% endif %}" required>
+
+                                </div>
+                                <div class="col-12 col-md-6 my-1 my-md-0">
+                                    <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Last name&nbsp;<strong class="text-danger">*</strong></label>
+                                    <input type="text" class="form-control" placeholder="Last name" name="last_name" value="{% if form.last_name.value %}{{form.last_name.value}}{% endif %}" required>
+
+                                </div>
+                            </div>
+
+                            <div class="form-row my-0 my-md-1 my-lg-2">
+                                <div class="col my-1 my-md-0">
+                                    <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Username&nbsp;<strong class="text-danger">*</strong></label>
+                                    <input type="text" class="form-control" placeholder="Username" name="username" value="{% if form.username.value %}{{form.username.value}}{% endif %}" required>
+
+                                </div>
+                            </div>
+
+                            <div class="form-row my-0 my-md-1 my-lg-2">
+                                <div class="col my-1 my-md-0">
+                                    <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Email Address&nbsp;<strong class="text-danger">*</strong></label>
+                                    <input type="email" class="form-control" placeholder="Email address" name="email" value="{% if form.email.value %}{{form.email.value}}{% endif %}" required>
+
+                                </div>
+                            </div>
+
+                            <div class="form-row my-0 my-md-1 my-lg-2">
+                                <div class="col my-1 my-md-0">
+                                    <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Mobile Phone&nbsp;<strong class="text-danger">*</strong></label>
+                                    <input type="text" class="form-control" placeholder="Mobile phone" name="phone" value="{% if form.phone.value %}{{form.phone.value}}{% endif %}" required>
+
+                                </div>
+                            </div>
 
                         </div>
-                        <div class="col-12 col-md-6 my-1 my-md-0">
-                            <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Last name</label>
-                            <input type="text" class="form-control" placeholder="Last name" name="last_name" value="" required>
 
+
+                        <div class="col-12 col-lg-6">
+
+                            <div class="form-row my-0 my-md-1 my-lg-2">
+                                <div class="col-12 col-md-8 my-1 my-md-0">
+                                    <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Birthdate&nbsp;<strong class="text-danger">*</strong></label>
+                                    <input type="date" class="form-control" placeholder="Birthdate" name="birthdate" value="{% if form.birthdate.value %}{{form.birthdate.value}}{% endif %}" required>
+
+                                </div>
+                                <div class="col-12 col-md-4 my-1 my-md-0">
+                                    <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Gender&nbsp;<strong class="text-danger">*</strong></label>
+                                    <select name="gender" class="custom-select">
+                                        <option value="">Gender</option>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                        <option value="C">Custom</option>
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="form-row  my-0 my-md-1 my-lg-2">
+                                <div class="col-12 col-md-6 my-1 my-md-0">
+                                    <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Password&nbsp;<strong class="text-danger">*</strong></label>
+                                    <input type="password" class="form-control" placeholder="New password" name="password" value="" required>
+                                    <span class="help-tooltip sr-only sr-only-focusable">First name</span>
+
+                                </div>
+                                <div class="col-12 col-md-6 my-1 my-md-0">
+                                    <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Confirm Password&nbsp;<strong class="text-danger">*</strong></label>
+                                    <input type="password" class="form-control" placeholder="Confirm password" name="conf_password" value="" required>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-row my-3">
+                                <div class="col help-tooltip form-text">
+                                    <p>By creating an account, you agree to our <a href="{% url 'terms-client' %}">Terms</a>, <a href="{% url 'data-policy' %}">Data Policy</a> and <a href="{% url 'cookies-policy' %}">Cookies Policy</a>.</p>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <button type="submit" class="btn btn-primary col">
+                                    Sign Up
+                                </button>
+                            </div>
+
+                            <div class="form-row my-3">
+                                <div class="col help-tooltip form-text text-center">
+                                    Already member? <a href="{% url 'account:login' %}" class="font-weight-bold">Login</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="form-row my-0">
-                        <div class="col my-1 my-md-0">
-                            <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Username</label>
-                            <input type="text" class="form-control" placeholder="Username" name="username" value="" required>
-
-                        </div>
-                    </div>
-
-                    <div class="form-row my-0">
-                        <div class="col my-1 my-md-0">
-                            <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Email Address</label>
-                            <input type="email" class="form-control" placeholder="Email address" name="email" value="" required>
-
-                        </div>
-                    </div>
-
-                    <div class="form-row my-0">
-                        <div class="col my-1 my-md-0">
-                            <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Mobile Phone</label>
-                            <input type="text" class="form-control" placeholder="Mobile phone" name="phone" value="" required>
-
-                        </div>
-                    </div>
-
-                    <div class="form-row my-0">
-                        <div class="col-12 col-md-8 my-1 my-md-0">
-                            <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Birthdate</label>
-                            <input type="date" class="form-control" placeholder="Birthdate" name="birthdate" value="" required>
-
-                        </div>
-                        <div class="col-12 col-md-4 my-1 my-md-0">
-                            <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Gender</label>
-                            <select name="gender" class="custom-select">
-                                <option value="">Gender</option>
-                                <option value="M">Male</option>
-                                <option value="F">Female</option>
-                                <option value="C">Custom</option>
-                            </select>
-
-                        </div>
-                    </div>
-
-                    <div class="form-row my-0 my-md-2">
-                        <div class="col-12 col-md-6 my-1 my-md-0">
-                            <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Password</label>
-                            <input type="password" class="form-control" placeholder="New password" name="password" value="" required>
-                            <span class="help-tooltip sr-only sr-only-focusable">First name</span>
-
-                        </div>
-                        <div class="col-12 col-md-6 my-1 my-md-0">
-                            <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Confirm Password</label>
-                            <input type="password" class="form-control" placeholder="Confirm password" name="conf_password" value="" required>
-
-                        </div>
-
-                    </div>
-
-                    <div class="form-row my-3">
-                        <div class="col help-tooltip form-text">
-                            By creating an account, you agree to our <a href="">Terms</a>, <a href="">Data Policy</a> and <a href="">Cookies Policy</a>.
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <button type="submit" class="btn btn-primary col">
-                            Sign Up
-                        </button>
-                    </div>
-
-                    <div class="form-row my-3">
-                        <div class="col help-tooltip form-text text-center">
-                            Already member? <a href="{% url 'account:login' %}" class="font-weight-bold">Login</a>
-                        </div>
-                    </div>
-
                 </form>
             </div>
             <div class="col d-flex justify-content-end" aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
@@ -128,6 +137,24 @@
                         {% endfor %}
                     {% endif %}
 
+                    {% if form.password.errors %}
+                        {% for error in form.password.errors %}
+                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="10000">
+                            <div class="toast-header">
+                                <img src="..." class="rounded mr-2" alt="...">
+                                <strong class="mr-auto">New Password</strong>
+                                <small class="text-muted">just now</small>
+                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="toast-body">
+                                {{ error }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
                     {% if form.first_name.errors %}
                         {% for error in form.first_name.errors %}
                         <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="10000">

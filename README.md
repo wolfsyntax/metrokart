@@ -8,7 +8,7 @@ a. VirtualEnv<br/>
 b. PipEnv<br/>
   ```pip install pipenv```
 
-3.1 Using pipenv
+3.1 Using pipenv<br/>
     ```pipenv shell```
     
 3.2 Using VirtualEnv
@@ -21,3 +21,5 @@ b. PipEnv<br/>
 4. Additional modules
 ```pip install -r  requirements.txt```
 
+5. Creating superuser/administrator account<br/>
+```python manage.py createsuperuser```

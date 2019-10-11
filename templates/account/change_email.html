@@ -11,6 +11,49 @@
 
                 <form method="post" class="my-5">
                     {% csrf_token %}
+
+                    {% if form.email.errors %}
+                    <div class="form-row">
+                        {% for error in form.email.errors %}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>Oops! <i class="fa fa-envelope"></i></strong>{{ error }}.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                    {% endif %}
+
+                    {% if messages %}
+                        {% for message in messages %}
+                        <div class="form-row my-2">
+                            <div class="col">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Oops! </strong>{{ message.message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if form.password.errors %}
+
+                        <div class="form-row">
+                        {% for error in password.errors %}
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <strong>Oops! </strong>{{ error }}.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
                     <div class="form-row my-0 my-md-2">
                         <div class="col-form-label-sm col-12 col-md-4">
                             Current Email Address
@@ -31,7 +74,8 @@
                             New Email Address
                         </div>
                         <div class="col">
-                            <input type="text" value="" placeholder="New Email Address" value="" id="" class="form-control">
+                            <input type="email" value="" placeholder="New Email Address" name="email" id="" class="form-control">
+
                         </div>
                     </div>
 
@@ -40,7 +84,7 @@
                             Password
                         </div>
                         <div class="col">
-                            <input type="password" value="" placeholder="Password" value="" id="" class="form-control">
+                            <input type="password" value="" placeholder="Current Password" name="password" class="form-control">
                         </div>
                     </div>
 

@@ -5,7 +5,7 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row h-100">
-            <div class="col offset-md-3 col-md-6 offset-lg-4 col-lg-4 my-auto">
+            <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4 my-auto">
                 
                 <form class="my-5" method="post">
 
@@ -54,7 +54,13 @@
 
                     <div class="form-row my-3">
                         <div class="col help-tooltip form-text text-center">
-                            New member? <a href="{% url "account:signup" %}" class="font-weight-bold">Sign Up</a>
+                            Don't have an account yet? <a href="{% url "account:signup" %}" class="font-weight-bold">Sign Up</a>
+                        </div>
+                    </div>
+
+                    <div class="form-row my-3">
+                        <div class="col help-tooltip form-text text-center">
+                            Want to sell? <a href="{% url "mall:merchant-form" %}" class="font-weight-bold">Become a seller</a>
                         </div>
                     </div>
 
