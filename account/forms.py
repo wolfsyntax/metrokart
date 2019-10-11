@@ -11,6 +11,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import update_session_auth_hash
 
 from .models import UserProfile
+from datetime import date, timedelta, datetime
 
 import re   # Regular Expression
 GENDER = (
@@ -117,6 +118,7 @@ class ChangePassForm(forms.Form):
         # A user was found with this as a username, raise an error.
         raise forms.ValidationError('This Email address is already in use.')
 
+
     def save(self, uid):
 
         cd = self.cleaned_data
@@ -140,6 +142,72 @@ class ChangePassForm(forms.Form):
         return False
 
 
+
+
+class UserProfileForm(forms.Form):
+
+    phone = forms.RegexField(regex=r"^(\+63|0)9[0-9]{9}$", max_length=13, error_messages={"invalid":"Phone number is invalid format","required": "Mobile Phone is required."})
+    gender = forms.ChoiceField(choices=GENDER)
+    birthdate = forms.DateField(input_formats=['%Y/%m/%d'])
+    password = forms.CharField(max_length=30, error_messages={"required": "Password is required"}, help_text="New Password must be a strong password")
+
+    def clean(self):
+
+        cd = super(UserProfileForm, self).clean()
+        password = self.cleaned_data['password']
+
+        # (?=.*[a-hj-np-z])(?=.*[A-HJ-NP-Z])(?=.*(\d|!0)).{8,}
+        if len(password) < 8:
+            self.add_error('password',
+                           'Password must contains at least eight (8) alpha-numeric and special characters.')
+
+        if not re.match('^(?=.*[a-z])(?=.*[A-Z])(?=.*[2-9])(?=.*(_|[^\w])).{8,}$', password):
+            self.add_error('password', 'Password must contains alpha-numeric and special characters.')
+
+
+
+        return cd
+
+    def clean_birthdate(self):
+        today = date.today()
+        cd = self.cleaned_data
+
+        #bday = datetime.strptime(cd['birthdate'], "%m-%d-%Y").date()
+
+        print("\n\n\n\n\nBirthdate Format : {}\n\n\n\n".format(cd['birthdate']))
+
+        age = (today - cd['birthdate']) // timedelta(days=365.2425)
+
+        if age < 18:
+            self.add_error('birthdate', 'Birthdate must be atleast 18yrs old.')
+
+        return cd['birthdate']
+
+    def save(self, uid):
+
+        cd = self.cleaned_data
+
+        userdata = User.objects.get(id=uid)
+
+        if userdata.check_password(cd['password']):
+            u = UserProfile.objects.get(user_id=uid)
+
+            u.phone = cd['phone']
+            u.gender = cd['gender']
+            u.birthdate = cd['birthdate']
+
+            u.save()
+
+            return True
+
+        else:
+            self.add_error('password', 'Password must be your recent password.')
+
+
+        return False
+
+
+
 class UserRegistrationForm(forms.Form):
 
     email = forms.EmailField(max_length=254, error_messages={"required": "Email is required."})
@@ -149,8 +217,8 @@ class UserRegistrationForm(forms.Form):
     password = forms.CharField(max_length=30, error_messages={"required":"Password is required"}, help_text="Password must be a strong password")
     conf_password = forms.CharField(max_length=30, error_messages={"required":"Confirm Password is required."})
     phone = forms.RegexField(regex=r"^(\+63|0)9[0-9]{9}$", max_length=13, error_messages={"invalid":"Phone number is invalid format","required": "Mobile Phone is required."})
-    gender = forms.MultipleChoiceField(choices=GENDER)
-    birthdate = forms.DateField()
+    gender = forms.ChoiceField(choices=GENDER)
+    birthdate = forms.DateField(input_formats=['%Y-%m-%d'])
 
     def clean(self):
         cd = super(UserRegistrationForm, self).clean()
@@ -198,7 +266,22 @@ class UserRegistrationForm(forms.Form):
 
         # A user was found with this as a username, raise an error.
         raise forms.ValidationError('Username is already in use.')
+    
+    def clean_birthdate(self):
+        today = date.today()
+        cd = self.cleaned_data
 
+        #bday = datetime.strptime(cd['birthdate'], "%m-%d-%Y").date()
+
+        #print("\n\n\n\n\nBirthdate Format : {}\n\n\n\n".format(cd['birthdate']))
+
+        age = (today - cd['birthdate']) // timedelta(days=365.2425)
+
+        if age < 18:
+            self.add_error('birthdate', 'Birthdate must be atleast 18yrs old.')
+
+        return cd['birthdate']
+    
     def save(self):
 #@w81mLBB01
         cd = self.cleaned_data
@@ -207,14 +290,18 @@ class UserRegistrationForm(forms.Form):
 
         userdata = User.objects.create_user(username=cd['username'], email=cd['email'], password=cd['password'])
 
+
+
         userdata.first_name = cd['first_name']
         userdata.last_name = cd['last_name']
         userdata.is_staff = False
 
         userdata.is_active = True
 
-        if userdata.save() :
+        #print("\n\n\n\nUser ID: {}\nBirthdate: {}\n\n\n".format(userdata.id, cd['birthdate']))
+        userprofile = UserProfile.objects.create(user_id=userdata.id, phone=cd['phone'], gender=cd['gender'], birthdate=cd['birthdate'])
+        #if userdata.save() :
 
-            userprofile = UserProfile.objects.create(user_id=userdata.id, phone=cd['phone'], gender=cd['gender'], birthdate=cd['birthdate'])
-            return userprofile.save()
+
+        return userprofile.save()
        # print("\n\nData successfully save!\n\n")

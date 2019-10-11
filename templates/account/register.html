@@ -64,9 +64,10 @@
                             <div class="form-row my-0 my-md-1 my-lg-2">
                                 <div class="col-12 col-md-8 my-1 my-md-0">
                                     <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Birthdate&nbsp;<strong class="text-danger">*</strong></label>
-                                    <input type="date" class="form-control" placeholder="Birthdate" name="birthdate" value="{% if form.birthdate.value %}{{form.birthdate.value}}{% endif %}" required>
-
+                                    <input type="date" value="" name="birthdate" placeholder="Birthdate" class="form-control">
                                 </div>
+
+
                                 <div class="col-12 col-md-4 my-1 my-md-0">
                                     <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Gender&nbsp;<strong class="text-danger">*</strong></label>
                                     <select name="gender" class="custom-select">

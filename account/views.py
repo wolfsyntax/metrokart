@@ -16,7 +16,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.contrib import  messages
 
-from .forms import UserRegistrationForm, ChangeEmailForm, ChangePassForm
+from .forms import UserRegistrationForm, ChangeEmailForm, ChangePassForm, UserProfileForm
 
 from django.contrib.auth.hashers import make_password, check_password
 
@@ -100,16 +100,41 @@ class SignupView(TemplateView):
 
     def post(self, request):
         form = self.form_class(request.POST)
-        print("\n\n\n\nSignup View Submission\n\n\n\n")
+
         if form.is_valid():
-            print("\n\n\n\nForm is valid\n\n\n\n")
+
             form.save()
+
             messages.add_message(request, messages.SUCCESS, "Account has been created successfully!!!")
+
             return HttpResponseRedirect('/user/login?next=/')
+
         return render(request, self.template_name, {"form": form})
 
 class ProfileView(LoginRequiredMixin, TemplateView):
+
     template_name = "account/profile.html"
+    form_class = UserProfileForm
+
+    def dispatch(self, request, *args, **kwargs):
+
+        if request.user.is_staff:
+            raise PermissionDenied
+
+        return super(ProfileView, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+
+            if form.save(request.user.id):
+                return HttpResponseRedirect("/")
+            else:
+                messages.add_message(request, messages.WARNING, "Please enter the current password!"
+                                     )
+        return render(request, self.template_name, {"form": form})
 
 #    def get_context_data(self, **kwargs):
 #        context = super().get_context_data(**kwargs)
