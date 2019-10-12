@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save, post_delete
 from django.shortcuts import reverse
 from address.models import (Region, Province, City, Barangay)
-from account.models import (UserProfile, Address)
+from account.models import (UserProfile, Address, PaymentMethod)
 from mall.models import Merchant
 
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -157,7 +157,7 @@ class OrderDetail(models.Model):
     quantity = models.IntegerField(default=1)
 
     def __str__(self):
-        return f"{self.quantity} of {self.product.product_name}"
+        return "{} of {}".format(self.quantity, self.product.product_name)
 
     def get_total_item_price(self):
         return self.quantity * self.product.product_price
@@ -349,6 +349,7 @@ class Payment(models.Model):
         verbose_name = "Payment"
         verbose_name_plural="Payments"
 
+
 class Refund(models.Model):
 
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -357,7 +358,7 @@ class Refund(models.Model):
     email = models.EmailField()
 
     def __str__(self):
-        return f"{self.pk}"
+        return "{}".format(self.pk)
 
     class Meta:
         db_table = "Refund"

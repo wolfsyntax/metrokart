@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.core.exceptions import PermissionDenied
 
 # Create your views here.
@@ -15,8 +15,8 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.contrib import  messages
-from account.models import UserProfile
-from .forms import UserRegistrationForm, ChangeEmailForm, ChangePassForm, UserProfileForm
+from account.models import UserProfile, Address
+from .forms import UserRegistrationForm, ChangeEmailForm, ChangePassForm, UserProfileForm, UserAddressForm
 
 from django.contrib.auth.hashers import make_password, check_password
 
@@ -73,7 +73,8 @@ class LoginView(TemplateView):
                     print("\n\n\n\n\Customer\n\n\n\n")
                     return HttpResponseRedirect("/")
 
-
+            #else:
+                #messages.add_message(request, messages.ERROR, "Inactive account")
         else:
            # print("\n\n\nuser doesn't exist")
             messages.add_message(request,messages.ERROR, "Inactive or Invalid credentials")
@@ -143,12 +144,76 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 class PaymentOptionView(LoginRequiredMixin, TemplateView):
     template_name = "account/profile.html"
 
-class UserAddressView(LoginRequiredMixin, TemplateView):
-    template_name = "account/new_address.html"
+class UserAddressList(LoginRequiredMixin, TemplateView):
+
+    template_name = "account/address_list.html"
+#    form_class = UserAddressForm
+
+    def dispatch(self, request, *args, **kwargs):
+
+        if request.user.is_staff:
+            raise PermissionDenied
+
+        self.userid = request.user.id
+
+        return super(UserAddressList, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+
+        context = super(UserAddressList, self).get_context_data(**kwargs)
+
+
+
+        try:
+            d = Address.objects.filter(user_id=self.userid)
+
+            print("\n\n\n\nThis user #{} is requesting to access this module\n\n\n".format(self.userid))
+            #print("This is the record: {}\n\n".format(d.consignee))
+
+            context['address_list'] = d
+            context['address_list_total'] = d.count()
+            #data = Address.objects.get(user_id=self.userid)
+            #context['address_list'] = data
+            #print("\n\n\nUser Address\n\n{}\n\n\n\n\n".format(data))
+
+        except Address.DoesNotExist:
+            pass
+
+
+        return context
+
 
 class UserNewAddressView(LoginRequiredMixin, TemplateView):
-    template_name = "account/new_address.html"
 
+    template_name = "account/new_address.html"
+    form_class = UserAddressForm
+
+    def dispatch(self, request, *args, **kwargs):
+
+        if request.user.is_staff:
+            raise PermissionDenied
+
+        return super(UserNewAddressView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+
+        context = super(UserNewAddressView, self).get_context_data(**kwargs)
+
+        context['form'] = self.form_class
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+
+        form = self.form_class(request.POST)
+        print("\n\n\nUserNewAddressView POST\n\n\n")
+        if form.is_valid():
+            print("UserNewAddressView ValidForm\n\n\n")
+
+            if form.save(request.user.id):
+                return HttpResponseRedirect("/account/address")
+
+        return render(request, self.template_name, {"form": form})
 
 class ChangePassView(LoginRequiredMixin, TemplateView):
     template_name = "account/change_password.html"

@@ -51,13 +51,13 @@ class Address(models.Model):
     zip_code = models.CharField(max_length=4)
 
     address_type = models.CharField(choices=ADDRESS_CHOICES, max_length=1)
-    default = models.BooleanField(default=False)
+    default_status = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
 
     def get_exact_address(self):
-        return f"{self.detailed_address}, {self.barangay}, {self.city}, {self.region}, {self.province} {self.zip_code}"
+        return "{}, {}, {}, {}, {} {}".format(self.detailed_address,self.barangay, self.city, self.region, self.province, self.zip_code)
 
     class Meta:
 
@@ -70,9 +70,13 @@ class PaymentMethod(models.Model):
     payment_name = models.CharField(max_length=100)
     status = models.BooleanField(default=True)
 
+    def __str__(self):
+        return "{} ({}) [{}]".format(self.payment_name, self.payment_type, self.status)
+
     class Meta:
         db_table = "PaymentMethod"
-
+        verbose_name = "Payment Method"
+        verbose_name_plural = "Payment Methods"
 
 class RoyaltyBonus(models.Model):
 

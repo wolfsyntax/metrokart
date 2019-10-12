@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404
 
 from django.contrib.auth import update_session_auth_hash
 
-from .models import UserProfile
+from .models import UserProfile, Address
 from datetime import date, timedelta, datetime
 
 import re   # Regular Expression
@@ -18,6 +18,11 @@ GENDER = (
     ('M', 'Male'),
     ('F', 'Female'),
     ('C', 'Custom'),
+)
+
+ADDRESS_CHOICES = (
+    ('B', 'Billing Address'),
+    ('S', 'Shipping Address'),
 )
 
 
@@ -301,3 +306,93 @@ class UserRegistrationForm(forms.Form):
 
 
         return userprofile.save()
+
+
+class UserAddressForm(forms.Form):
+
+    consignee = forms.CharField(max_length=100, error_messages={"required": "First name is required."})
+
+    phone_number = forms.RegexField(regex=r"^(\+63|0)9[0-9]{9}$", max_length=13, error_messages={"invalid": "Phone number is invalid format", "required": "Mobile Phone is required."})
+
+    landmark = forms.CharField(max_length=100)
+    detailed_address = forms.CharField(max_length=100)
+    barangay = forms.CharField(max_length=100)
+    city = forms.CharField(max_length=100)
+    province = forms.CharField(max_length=100)
+    region = forms.CharField(max_length=100)
+    zip_code = forms.CharField(max_length=4)
+
+    address_type = forms.ChoiceField(choices=ADDRESS_CHOICES)
+    default_status = forms.BooleanField(required=False)
+    password = forms.CharField(max_length=30, error_messages={"required": "Password is required"}, help_text="Password must be a strong password")
+
+    def clean(self):
+
+        cd = super(UserAddressForm, self).clean()
+
+        print("\n\n\n\n\n\n\nBefore Cleaning UserAddressForm\n\n{}\n\n".format(cd))
+        password = cd['password']
+        if not re.match('^(?=.*[a-z])(?=.*[A-Z])(?=.*[2-9])(?=.*(_|[^\w])).{8,}$', password):
+            self.add_error('password', 'Password must contains alpha-numeric and special characters.')
+
+        if len(password) < 8:
+            self.add_error('password', 'Password must contains at least eight (8) alpha-numeric and special characters.')
+
+        print("\n\n\n\n\n\n\nAfter Cleaning UserAddressForm\n\n{}\n\n".format(cd))
+
+        return cd
+
+
+    def clean_zip_code(self):
+
+        cd = self.cleaned_data
+
+        zip_code = cd['zip_code']
+
+        if not re.match('^[0-9]{4}$', zip_code):
+            self.add_error('zip_code', 'Zip Code must contains 4 numeric characters.')
+
+        return zip_code
+
+    def clean_city(self):
+
+        cd = self.cleaned_data
+
+        city = cd['city']
+
+        if not re.match("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$", city):
+            self.add_error('city', 'City name must be contain alpha characters and space.')
+
+        return city
+
+    def save(self, user_id):
+        print("\n\n\n\n\nSaving UserAddressForm\n\n\n\n\n\n")
+        cd = self.cleaned_data
+
+        uauth = User.objects.get(id=user_id)
+        if uauth.check_password(cd['password']):
+
+            new_address = Address.objects.create(consignee=cd['consignee'], phone_number=cd['phone_number'],region = cd['region'],
+                                                 user_id=user_id, landmark = cd['landmark'],province = cd['province'],
+                                                 detailed_address = cd['detailed_address'], barangay = cd['barangay'], city = cd['city'],
+                                                 zip_code = cd['zip_code'], address_type = cd['address_type'], default_status = cd['default_status'])
+
+            new_address.save()
+
+            last_id = new_address.id
+
+            address_list = Address.objects.get(user_id=user_id)
+
+            if cd['default_status']:
+
+                # Updating tables
+
+                for address in address_list:
+                    if not address.id == last_id:
+                        address.default = False
+
+            return True
+        else:
+            self.add_error('password', 'Password must be your recent password.')
+
+        return False

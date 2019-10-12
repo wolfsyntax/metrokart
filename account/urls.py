@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^account/email$', ChangeEmailView.as_view(), name='profile'), #ok
     url(r'^account/payment$', PaymentOptionView.as_view(), name='payment-management'),
     url(r'^account/password$', ChangePassView.as_view(), name='change-pass'), #ok
-    url(r'^account/address$', UserAddressView.as_view(), name='user-address'),
+    url(r'^account/address$', UserAddressList.as_view(), name='user-address'),
+    url(r'^account/address/new$', UserNewAddressView.as_view(), name='user-new-address'),
     url(r'^account/wallet$', LoyaltyPointView.as_view(), name='loyalty-bonus'),
 ]

@@ -6,77 +6,177 @@
 {% endblock %}
 {% block content %}
     <div class="container-fluid">
-        <div class="row h-100 bg-dark">
-            <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4 my-auto">
+        <div class="row h-100">
+            <div class="col-12 col-sm-10 offset-sm-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3 my-auto" style="position: relative;">
                 
                 <form method="post" class="my-5">
                     {% csrf_token %}
                     <div class="form-row my-0 my-md-2">
                         <div class="col my-1 my-md-0">
-                            <input type="text" class="form-control" placeholder="Consignee name" name="consignee_name" value="">
-                            <span class="help-tooltip sr-only sr-only-focusable">Phone number</span>
+                            <input type="text" class="form-control" placeholder="Consignee name" name="consignee" value="{% if form.consignee.value %}{{form.consignee.value}}{% endif %}" required>
+
+                            {% if form.consignee.errors %}
+
+                                {% for error in form.consignee.errors %}
+                                    <span class="form-text text-muted">{{ error }}</span>
+                                {% endfor %}
+
+                            {% endif %}
                         </div>
                     </div>
 
                     <div class="form-row my-0 my-md-2">
                         <div class="col my-1 my-md-0">
-                            <input type="text" class="form-control" placeholder="Phone number" name="phone" value="">
-                            <span class="help-tooltip sr-only sr-only-focusable">Phone number</span>
+                            <input type="text" class="form-control" placeholder="Phone number" name="phone_number" value="{% if form.phone_number.value %}{{form.phone_number.value}}{% endif %}" required>
+                            {% if form.phone_number.errors %}
+
+                                {% for error in form.phone_number.errors %}
+                                    <span class="form-text text-muted">{{ error }}</span>
+                                {% endfor %}
+
+                            {% endif %}
+
                         </div>
                     </div>
 
                     <div class="form-row my-0 my-md-2">
                         <div class="col my-1 my-md-0">
-                            <input type="text" class="form-control" placeholder="Landmark" name="Landmark" value="">
-                            <span class="help-tooltip sr-only sr-only-focusable">Phone number</span>
+                            <select name="address_type" class="custom-select" required>
+                                <option value="">Address Type</option>
+                                <option value="B">
+                                    Billing Address
+                                </option>
+                                <option value="S">
+                                    Shipping Address
+                                </option>
+                            </select>
+
+                            {% if form.address_type.errors %}
+
+                                {% for error in form.address_type.errors %}
+                                    <span class="form-text text-muted">{{ error }}</span>
+                                {% endfor %}
+
+                            {% endif %}
+
                         </div>
                     </div>
 
                     <div class="form-row my-0 my-md-2">
                         <div class="col my-1 my-md-0">
-                            <input type="text" class="form-control" placeholder="Building, Street, and etc..." name="detailed_address" value="">
-                            <span class="help-tooltip sr-only sr-only-focusable">Phone number</span>
+                            <input type="text" class="form-control" placeholder="Landmark" name="landmark" value="{% if form.landmark.value %}{{form.landmark.value}}{% endif %}" required>
+                            {% if form.landmark.errors %}
+
+                                {% for error in form.landmark.errors %}
+                                    <span class="form-text text-muted">{{ error }}</span>
+                                {% endfor %}
+
+                            {% endif %}
+
                         </div>
                     </div>
 
                     <div class="form-row my-0 my-md-2">
                         <div class="col my-1 my-md-0">
-                            <input type="text" class="form-control" placeholder="Barangay" name="barangay" value="">
-                            <span class="help-tooltip sr-only sr-only-focusable">Phone number</span>
+                            <input type="text" class="form-control" placeholder="Building, Street, and etc..." name="detailed_address" value="{% if form.detailed_address.value %}{{form.detailed_address.value}}{% endif %}" required>
+                            {% if form.detailed_address.errors %}
+
+                                {% for error in form.detailed_address.errors %}
+                                    <span class="form-text text-muted">{{ error }}</span>
+                                {% endfor %}
+
+                            {% endif %}
+
                         </div>
                     </div>
 
                     <div class="form-row my-0 my-md-2">
                         <div class="col my-1 my-md-0">
-                            <input type="text" class="form-control" placeholder="City" name="city" value="">
-                            <span class="help-tooltip sr-only sr-only-focusable">Phone number</span>
+                            <input type="text" class="form-control" placeholder="Barangay" name="barangay" value="{% if form.barangay.value %}{{form.barangay.value}}{% endif %}" required>
+                            {% if form.barangay.errors %}
+
+                                {% for error in form.barangay.errors %}
+                                    <span class="form-text text-muted">{{ error }}</span>
+                                {% endfor %}
+
+                            {% endif %}
+
                         </div>
                     </div>
 
                     <div class="form-row my-0 my-md-2">
                         <div class="col my-1 my-md-0">
-                            <input type="text" class="form-control" maxlength="4" placeholder="Postal Code" name="zip_code" value="">
-                            <span class="help-tooltip sr-only sr-only-focusable">Phone number</span>
+                            <input type="text" class="form-control" placeholder="City" name="city" value="{% if form.city.value %}{{form.city.value}}{% endif %}" required>
+                            {% if form.city.errors %}
+
+                                {% for error in form.city.errors %}
+                                    <span class="form-text text-muted">{{ error }}</span>
+                                {% endfor %}
+
+                            {% endif %}
+
                         </div>
                     </div>
 
                     <div class="form-row my-0 my-md-2">
                         <div class="col my-1 my-md-0">
-                            <input type="text" class="form-control" placeholder="Province" name="province" value="">
-                            <span class="help-tooltip sr-only sr-only-focusable">Phone number</span>
+                            <input type="text" class="form-control" maxlength="4" placeholder="Postal Code" name="zip_code" value="{% if form.zip_code.value %}{{form.zip_code.value}}{% endif %}" required>
+                            {% if form.zip_code.errors %}
+
+                                {% for error in form.zip_code.errors %}
+                                    <span class="form-text text-muted">{{ error }}</span>
+                                {% endfor %}
+
+                            {% endif %}
+
                         </div>
                     </div>
 
                     <div class="form-row my-0 my-md-2">
                         <div class="col my-1 my-md-0">
-                            <input type="text" class="form-control" placeholder="Region" name="region" value="">
-                            <span class="help-tooltip sr-only sr-only-focusable">Phone number</span>
+                            <input type="text" class="form-control" placeholder="Province" name="province" value="{% if form.province.value %}{{form.province.value}}{% endif %}" required>
+                            {% if form.province.errors %}
+
+                                {% for error in form.province.errors %}
+                                    <span class="form-text text-muted">{{ error }}</span>
+                                {% endfor %}
+
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                    <div class="form-row my-0 my-md-2">
+                        <div class="col my-1 my-md-0">
+                            <input type="text" class="form-control" placeholder="Region" name="region" value="{% if form.region.value %}{{form.region.value}}{% endif %}" required>
+                            {% if form.region.errors %}
+
+                                {% for error in form.region.errors %}
+                                    <span class="form-text text-muted">{{ error }}</span>
+                                {% endfor %}
+
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                    <div class="form-row my-0 my-md-2">
+                        <div class="col my-1 my-md-0">
+                            <input type="password" class="form-control" placeholder="Current Password" name="password" value="">
+                            {% if form.password.errors %}
+
+                                {% for error in form.password.errors %}
+                                    <span class="form-text text-muted">{{ error }}</span>
+                                {% endfor %}
+
+                            {% endif %}
+
                         </div>
                     </div>
 
                     <div class="form-row my-0 my-md-3">
                         <div class="col my-1 my-md-0">
-                            <input type="checkbox" class="" placeholder="" name="default" value="" id="is_default">
+                            <input type="checkbox" class="" placeholder="" name="default_status" value="" id="is_default">
                             <label class="form-check-label d-inline-block" for="is_default">&nbsp;&nbsp;Set as default address</label>
                             <span class="help-tooltip sr-only sr-only-focusable">Phone number</span>
                         </div>
@@ -91,6 +191,200 @@
                     </div>
 
                 </form>
+            </div>
+
+            <div class="col d-flex justify-content-end" aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+
+                <div class="" style="position: absolute; top: 10px; right: 10px; float: right;">
+                    {% if form.consignee.errors %}
+                        {% for error in form.consignee.errors %}
+                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="10000">
+                            <div class="toast-header">
+                                <img src="..." class="rounded mr-2" alt="...">
+                                <strong class="mr-auto">Consignee</strong>
+                                <small class="text-muted">just now</small>
+                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="toast-body">
+                                {{ error }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if form.phone_number.errors %}
+                        {% for error in form.phone_number.errors %}
+                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="10000">
+                            <div class="toast-header">
+                                <img src="..." class="rounded mr-2" alt="...">
+                                <strong class="mr-auto">Phone number</strong>
+                                <small class="text-muted">just now</small>
+                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="toast-body">
+                                {{ error }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% if form.landmark.errors %}
+                        {% for error in form.landmark.errors %}
+                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="10000">
+                            <div class="toast-header">
+                                <img src="..." class="rounded mr-2" alt="...">
+                                <strong class="mr-auto">Nearest Landmark</strong>
+                                <small class="text-muted">just now</small>
+                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="toast-body">
+                                {{ error }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if form.detailed_address.errors %}
+                        {% for error in detailed_address.errors %}
+                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="10000">
+                            <div class="toast-header">
+                                <img src="..." class="rounded mr-2" alt="...">
+                                <strong class="mr-auto">Detailed Address</strong>
+                                <small class="text-muted">just now</small>
+                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="toast-body">
+                                {{ error }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if form.barangay.errors %}
+                        {% for error in form.barangay.errors %}
+                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="10000">
+                            <div class="toast-header">
+                                <img src="..." class="rounded mr-2" alt="...">
+                                <strong class="mr-auto">Barangay</strong>
+                                <small class="text-muted">just now</small>
+                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="toast-body">
+                                {{ error }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if form.city.errors %}
+                        {% for error in form.City.errors %}
+                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="10000">
+                            <div class="toast-header">
+                                <img src="..." class="rounded mr-2" alt="...">
+                                <strong class="mr-auto">City/Municipality</strong>
+                                <small class="text-muted">just now</small>
+                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="toast-body">
+                                {{ error }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if form.province.errors %}
+                        {% for error in form.province.errors %}
+                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="10000">
+                            <div class="toast-header">
+                                <img src="..." class="rounded mr-2" alt="...">
+                                <strong class="mr-auto">Province</strong>
+                                <small class="text-muted">just now</small>
+                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="toast-body">
+                                {{ error }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if form.region.errors %}
+                        {% for error in form.region.errors %}
+                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="10000">
+                            <div class="toast-header">
+                                <img src="..." class="rounded mr-2" alt="...">
+                                <strong class="mr-auto">Region</strong>
+                                <small class="text-muted">just now</small>
+                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="toast-body">
+                                {{ error }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if form.zip_code.errors %}
+                        {% for error in form.zip_code.errors %}
+                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="10000">
+                            <div class="toast-header bg-danger text-white">
+                                <img src="..." class="rounded mr-2" alt="...">
+                                <strong class="mr-auto">Zip/Postal Code</strong>
+                                <small class="text-muted">just now</small>
+                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="toast-body">
+                                {{ error }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if form.address_type.errors %}
+                        {% for error in form.address_type.errors %}
+                        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="10000">
+                            <div class="toast-header bg-danger text-white">
+                                <img src="..." class="rounded mr-2" alt="...">
+                                <strong class="mr-auto">Address Type</strong>
+                                <small class="text-muted">just now</small>
+                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="toast-body">
+                                {{ error }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>

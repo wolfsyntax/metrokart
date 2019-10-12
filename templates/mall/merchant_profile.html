@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+
+{% endblock %}
+
+{% block metadescription %}
+
+{% endblock %}
+
+{% block metakeywords %}
+
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row h-100">
+        <div class="col-12 col-md-10 offset-md-1 my-1">
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="row">
+                    <div class="col-12 col-xl-6">
+
+
+                        <div class="card my-2 mt-md-2 mb-3">
+                            <div class="card-body">
+                                <div class="form-row my-0 my-md-1 my-lg-2">
+                                    <div class="col my-1 my-md-0">
+                                        <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Company Name&nbsp;<strong class="text-danger">*</strong></label>
+                                        <input type="text" class="form-control" placeholder="Company name" name="company_name" value="{% if form.company_name.value %}{{form.company_name.value}}{% endif %}" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-row my-0 my-md-1 my-lg-2">
+                                    <div class="col my-1 my-md-0">
+                                        <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Company Name&nbsp;<strong class="text-danger">*</strong></label>
+                                        <input type="text" class="form-control" placeholder="Company address" name="company_address" value="{% if form.company_address.value %}{{form.company_address.value}}{% endif %}" required>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-row my-0 my-md-1 my-lg-2">
+                                    <div class="col my-1 my-md-0">
+                                        <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Company Logo&nbsp;<strong class="text-danger">*</strong></label>
+                                        <input type="file" name="company_logo" accept="image/*" required="" id="id_company_logo">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card my-2 mt-md-2 mb-3">
+                            <div class="card-body">
+                                <div class="form-row my-0 my-md-1 my-lg-2">
+                                    <div class="col my-1 my-md-0">
+                                        <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Telephone&nbsp;<strong class="text-danger">*</strong></label>
+                                        <input type="text" class="form-control" placeholder="Telephone" name="telephone" value="{% if form.telephone.value %}{{form.telephone.value}}{% endif %}" required>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="form-row my-0 my-md-1 my-lg-2">
+                                    <div class="col my-1 my-md-0">
+                                        <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Fax No.&nbsp;<strong class="text-danger">*</strong></label>
+                                        <input type="text" class="form-control" placeholder="Fax" name="fax" value="{% if form.fax.value %}{{form.fax.value}}{% endif %}" required>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card my-2 mt-md-4 mb-3">
+                            <div class="card-body">
+                                <div class="form-row my-0 my-md-1 my-lg-2">
+                                    <div class="col my-1 my-md-0">
+                                        <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Can Shipped&nbsp;<strong class="text-danger">*</strong></label>
+                                        <input type="checkbox" name="can_shipped" required="" id="id_can_shipped">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xl-6">
+                        <div class="card my-2 mb-md-1 mt-md-2">
+                            <div class="card-body">
+                                <div class="form-row my-0 my-md-1 my-lg-2">
+                                    <div class="col my-1 my-md-0">
+                                        <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Tin No.&nbsp;<strong class="text-danger">*</strong></label>
+                                        <input type="text" class="form-control" placeholder="###-###-###-###" name="tin" value="{% if form.tin.value %}{{form.tin.value}}{% endif %}" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-row my-0 my-md-1 my-lg-2">
+                                    <div class="col my-1 my-md-0">
+                                        <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Business Permit No.&nbsp;<strong class="text-danger">*</strong></label>
+                                        <input type="text" class="form-control" placeholder="Business Permit No." name="permit_no" value="{% if form.permit_no.value %}{{form.permit_no.value}}{% endif %}" required>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card my-2 my-md-1">
+                            <div class="card-body">
+                                <div class="form-row my-0">
+                                    <div class="col my-1 my-md-0">
+                                        <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Contact Name&nbsp;<strong class="text-danger">*</strong></label>
+                                        <input type="text" class="form-control" placeholder="Contact name" name="contact_name" value="{% if form.contact_name.value %}{{form.contact_name.value}}{% endif %}" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-row my-0 my-md-1 my-lg-2">
+                                    <div class="col my-1 my-md-0">
+                                        <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm">Contact Title&nbsp;<strong class="text-danger">*</strong></label>
+                                        <input type="text" class="form-control" placeholder="Contact Title / Position" name="cotact_title" value="{% if form.contact_title.value %}{{form.contact_title.value}}{% endif %}" required>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-row my-0 my-md-1 my-lg-2">
+                                    <div class="col my-1 my-md-0">
+                                        <label class="py-0 my-1 d-none d-lg-inline-block col-form-label-sm col-12">Contact number&nbsp;<strong class="text-danger">*</strong></label>
+                                        <input type="text" name="phone" required="" class="form-control" placeholder="Contact number" value="{% if form.phone.value %}{{form.phone.value}}{% endif %}">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card bg-transparent border-0 my-0">
+                            <div class="card-body px-0 py-0">
+                                <div class="form-row my-0 py-0 my-2">
+                                    <div class="col my-1 my-md-0">
+                                      <input type="password" name="password" placeholder="Current Password" class="form-control" value="">
+                                    </div>
+                                </div>
+
+                                <div class="form-row my-0 my-md-1 my-lg-2">
+                                    <div class="col my-1 my-md-0">
+                                      <button type="submit" class="btn btn-success w-100">Update Profile</button>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}
+    New Address
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row h-100">
+        <div class="col">
+            {% for address in address_list %}
+                {{ address.consignee }}
+                {{ address.phone_number }}
+            {% empty %}
+                No Records found
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

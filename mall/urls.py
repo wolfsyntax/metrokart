@@ -5,5 +5,6 @@ from .views import *
 urlpatterns = [
     url(r'^auth/merchant/join$', MerchantCreateView.as_view(), name="merchant-form"),
     url(r'^dashboard$', DashboardView.as_view(), name="dashboard"),
+    url(r'^merchant/profile$', MerchantUpdateView.as_view(), name="merchant-update"),
     #url(r'^c/(?P<slug>[a-z\-]+)$', CategoryDetailView.as_view(), name="category-detail")
 ]

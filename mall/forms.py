@@ -90,3 +90,37 @@ class MerchantForm(forms.Form):
         userdata.is_active = False
 
         userdata.save()
+
+class MerchantUpdateForm(forms.Form):
+
+    company_name = forms.CharField(max_length=100)
+    company_address = forms.CharField(max_length=255)
+    contact_name = forms.CharField(max_length=100)
+    contact_title = forms.CharField(max_length=100)
+    phone = forms.RegexField(regex="^(\+63|0)9[0-9]{9}$" ,max_length=13)
+
+    telephone = forms.CharField(max_length=100)
+    fax = forms.CharField(max_length=100)
+    company_logo = forms.ImageField()
+    payment_methods = forms.MultipleChoiceField()
+
+    can_shipped = forms.BooleanField()
+    tin = forms.RegexField(regex="^[\d]{3}-[\d]{3}-[\d]{3}-[\d]{3}$", max_length=15)
+    permit_no = forms.RegexField(regex="[a-zA-Z0-9]{8,}", max_length=32)
+
+    password = forms.CharField(max_length=30, error_messages={"required": "Password is required"}, help_text="Password must be a strong password")
+
+    def clean(self):
+        cd = super(MerchantUpdateForm, self).clean()
+
+        password = self.cleaned_data['password']
+
+        if not re.match('^(?=.*[a-z])(?=.*[A-Z])(?=.*[2-9])(?=.*(_|[^\w])).{8,}$', password):
+            self.add_error('password', 'Password must contains alpha-numeric and special characters.')
+
+        if len(password) < 8:
+            self.add_error('password', 'Password must contains at least eight (8) alpha-numeric and special characters.')
+
+
+        return cd
+
