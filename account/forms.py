@@ -184,7 +184,7 @@ class UserProfileForm(forms.Form):
         age = (today - cd['birthdate']) // timedelta(days=365.2425)
 
         if age < 18:
-            self.add_error('birthdate', 'Birthdate must be atleast 18yrs old.')
+            raise forms.ValidationError('Age must be atleast 18yrs old.')
 
         return cd['birthdate']
 
@@ -375,7 +375,7 @@ class UserAddressForm(forms.Form):
             new_address = Address.objects.create(consignee=cd['consignee'], phone_number=cd['phone_number'],region = cd['region'],
                                                  user_id=user_id, landmark = cd['landmark'],province = cd['province'],
                                                  detailed_address = cd['detailed_address'], barangay = cd['barangay'], city = cd['city'],
-                                                 zip_code = cd['zip_code'], address_type = cd['address_type'], default_status = cd['default_status'])
+                                                 zip_code = cd['zip_code'], address_type = cd['address_type'], default = cd['default_status'])
 
             new_address.save()
 
