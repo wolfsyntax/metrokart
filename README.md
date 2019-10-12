@@ -21,5 +21,11 @@ b. PipEnv<br/>
 4. Additional modules
 ```pip install -r  requirements.txt```
 
-5. Creating superuser/administrator account<br/>
+5. Create MySQL Database with default configuration <br/>
+```http://127.0.0.1/phpmyadmin/server_databases.php```<br/>
+    Database Name: metrokart<br/>
+6. Creating Table using ```migrate``` command<br/>
+```python manage.py migrate```<br/>
+
+7. Creating superuser/administrator account<br/>
 ```python manage.py createsuperuser```

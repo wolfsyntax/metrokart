@@ -286,7 +286,6 @@ class UserRegistrationForm(forms.Form):
 #@w81mLBB01
         cd = self.cleaned_data
         #username = cd['email'].split("@")[0]
-        print("\n\n\n\n\n\n\n\nSaving Data:\n{}\n\n\n\n\n\n\n\n\n\n".format(cd))
 
         userdata = User.objects.create_user(username=cd['username'], email=cd['email'], password=cd['password'])
 
@@ -298,10 +297,7 @@ class UserRegistrationForm(forms.Form):
 
         userdata.is_active = True
 
-        #print("\n\n\n\nUser ID: {}\nBirthdate: {}\n\n\n".format(userdata.id, cd['birthdate']))
         userprofile = UserProfile.objects.create(user_id=userdata.id, phone=cd['phone'], gender=cd['gender'], birthdate=cd['birthdate'])
-        #if userdata.save() :
 
 
         return userprofile.save()
-       # print("\n\nData successfully save!\n\n")

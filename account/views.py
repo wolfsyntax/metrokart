@@ -15,7 +15,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.contrib import  messages
-
+from account.models import UserProfile
 from .forms import UserRegistrationForm, ChangeEmailForm, ChangePassForm, UserProfileForm
 
 from django.contrib.auth.hashers import make_password, check_password
@@ -76,7 +76,7 @@ class LoginView(TemplateView):
 
         else:
            # print("\n\n\nuser doesn't exist")
-            messages.add_message(request,messages.ERROR, "Invalid Username or Password")
+            messages.add_message(request,messages.ERROR, "Inactive or Invalid credentials")
 
         return render(request, "account/login.html")
 
@@ -90,7 +90,7 @@ class LogoutView(RedirectView):
             # Redirect to this page until the session has been cleared.
             return HttpResponseRedirect(next_page)
 
-        return super().dispatch(request, *args, **kwargs)
+        return super(LogoutView, self).dispatch(request, *args, **kwargs)
 
 
 class SignupView(TemplateView):
@@ -211,7 +211,26 @@ class ChangePhoneView(LoginRequiredMixin, TemplateView):
     template_name = "account/change_phone.html"
 
 class LoyaltyPointView(LoginRequiredMixin, TemplateView):
+
     template_name = "account/coinwallet.html"
+
+    def dispatch(self, request, *args, **kwargs):
+
+        if request.user.is_staff:
+
+            raise PermissionDenied
+        else:
+            self.userid = request.user.id
+
+        return super(LoyaltyPointView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+
+        context = super(LoyaltyPointView, self).get_context_data(**kwargs)
+        context['loyalty_point'] = UserProfile.objects.get(user_id=self.userid).loyalty_point
+        context['loyalty_trx'] = None
+
+        return context
 
 class VoucherView(LoginRequiredMixin, TemplateView):
     template_name = "account/profile.html"

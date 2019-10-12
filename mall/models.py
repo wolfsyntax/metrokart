@@ -14,7 +14,7 @@ class Merchant(models.Model):
     phone = models.CharField(max_length=100, blank=True)
     telephone = models.CharField(max_length=100, null=True)
     fax = models.CharField(max_length=100, null=True)
-    company_logo = models.CharField(max_length=100, null=True)
+    company_logo = models.ImageField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     payment_methods = models.ManyToManyField(PaymentMethod)
     can_shipped = models.BooleanField(default=False)

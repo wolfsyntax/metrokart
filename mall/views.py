@@ -3,6 +3,7 @@ from django.views.generic import CreateView, TemplateView
 
 from .forms import MerchantForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.core.exceptions import PermissionDenied
 
 # Create your views here.
 class MerchantCreateView(TemplateView):
@@ -47,6 +48,13 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
 #    form_class = MerchantForm
     template_name = "mall/dashboard.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            raise PermissionDenied
+
+        return super(DashboardView, self).dispatch(request, *args, **kwargs)
+
 
     def get_context_data(self, **kwargs):
 
